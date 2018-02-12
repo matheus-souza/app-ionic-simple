@@ -22,4 +22,9 @@ export class HomePage {
   public getUsers() {
     this.userService.findAll().subscribe(response => this.users = response);
   }
+
+  public saveUser() {
+    this.userService.save(this.user).subscribe(respose => this.getUsers());
+  }
+
 }

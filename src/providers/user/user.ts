@@ -20,4 +20,8 @@ export class UserProvider {
   public findAll():Observable<any> {
     return this.http.get(this.urlUser);
   }
+
+  public save(user):Observable<any> {
+    return this.http.post(this.urlUser, user);
+  }
 }
