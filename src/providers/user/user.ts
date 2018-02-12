@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {Observable} from "rxjs/Observable";
 
 /*
   Generated class for the UserProvider provider.
@@ -10,8 +11,13 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class UserProvider {
 
+  public urlUser = "http://localhost/api/user";
+
   constructor(public http: HttpClient) {
     console.log('Hello UserProvider Provider');
   }
 
+  public findAll():Observable<any> {
+    return this.http.get(this.urlUser);
+  }
 }
