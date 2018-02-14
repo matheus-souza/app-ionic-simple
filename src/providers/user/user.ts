@@ -29,4 +29,7 @@ export class UserProvider {
     return this.http.put(this.urlUser + "/" + user._id, user);
   }
 
+  public delete(id):Observable<any> {
+    return this.http.delete(this.urlUser + "/" + id);
+  }
 }

@@ -37,4 +37,8 @@ export class HomePage {
     this.user = {"_id":"", "name":"", "email":""};
   }
 
+  public deleteUser(id) {
+    this.userService.delete(id).subscribe(respose => this.getUsers());
+  }
+
 }

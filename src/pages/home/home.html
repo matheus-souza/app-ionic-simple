@@ -24,6 +24,9 @@
       <button (click)="populateForm(user)" ion-button outline item-end color="dark">
         <ion-icon name="create"></ion-icon>
       </button>
+      <button (click)="deleteUser(user._id)" ion-button outline item-end color="danger">
+        <ion-icon name="trash"></ion-icon>
+      </button>
     </ion-item-divider>
   </ion-list>
 </ion-content>
