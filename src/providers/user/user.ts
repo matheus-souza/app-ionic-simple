@@ -24,4 +24,9 @@ export class UserProvider {
   public save(user):Observable<any> {
     return this.http.post(this.urlUser, user);
   }
+
+  public update(user):Observable<any> {
+    return this.http.put(this.urlUser + "/" + user._id, user);
+  }
+
 }

@@ -13,7 +13,7 @@ export class HomePage {
 
   public users = [];
 
-  public user = {"name":"", "email":""};
+  public user = {"_id":"", "name":"", "email":""};
 
   constructor(public navCtrl: NavController, private userService:UserProvider) {
     this.getUsers();
@@ -23,8 +23,18 @@ export class HomePage {
     this.userService.findAll().subscribe(response => this.users = response);
   }
 
+  public populateForm(user) {
+    this.user = user;
+  }
+
   public saveUser() {
-    this.userService.save(this.user).subscribe(respose => this.getUsers());
+    if (this.user._id == "") {
+      this.userService.save(this.user).subscribe(respose => this.getUsers());
+    } else {
+      this.userService.update(this.user).subscribe(respose => this.getUsers());
+    }
+
+    this.user = {"_id":"", "name":"", "email":""};
   }
 
 }

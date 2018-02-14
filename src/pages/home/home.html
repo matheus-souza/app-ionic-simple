@@ -8,17 +8,22 @@
 
 <ion-content padding>
   <form (ngSubmit)="saveUser()">
-    <ion-item>
+    <ion-item-divider>
       <ion-label color="primary" floating>Name</ion-label>
       <ion-input type="text" [(ngModel)]="user.name" name="name"></ion-input>
-    </ion-item>
-    <ion-item>
+    </ion-item-divider>
+    <ion-item-divider>
       <ion-label color="primary" floating>E-mail</ion-label>
       <ion-input type="email" [(ngModel)]="user.email" name="email"></ion-input>
-    </ion-item>
+    </ion-item-divider>
     <button ion-button type="submit" block>Save</button>
   </form>
   <ion-list *ngFor="let user of users">
-    <ion-item>{{user.name}} - {{user.email}}</ion-item>
+    <ion-item-divider>
+      {{user.name}} - {{user.email}}
+      <button (click)="populateForm(user)" ion-button outline item-end color="dark">
+        <ion-icon name="create"></ion-icon>
+      </button>
+    </ion-item-divider>
   </ion-list>
 </ion-content>
