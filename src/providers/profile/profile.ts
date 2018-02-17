@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {Observable} from "rxjs/Observable";
 
 /*
   Generated class for the ProfileProvider provider.
@@ -14,6 +15,10 @@ export class ProfileProvider {
 
   constructor(public http: HttpClient) {
     console.log('Hello ProfileProvider Provider');
+  }
+
+  public findAll():Observable<any> {
+    return this.http.get(this.urlProfile);
   }
 
 }
