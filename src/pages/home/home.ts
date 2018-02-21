@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import {UserProvider} from "../../providers/user/user";
 import {ProfileProvider} from "../../providers/profile/profile";
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @Component({
   selector: 'page-home',
@@ -10,7 +11,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
   providers: [
     UserProvider,
     ProfileProvider,
-    Camera
+    Camera,
+    Geolocation
   ]
 })
 export class HomePage {
@@ -20,7 +22,7 @@ export class HomePage {
 
   public user = {"_id":"", "name":"", "email":"", "profile":"", "photo":""};
 
-  constructor(public navCtrl: NavController, private userService:UserProvider, private profileService:ProfileProvider, private camera: Camera) {
+  constructor(public navCtrl: NavController, private userService:UserProvider, private profileService:ProfileProvider, private camera: Camera, private geolocation: Geolocation) {
     this.getUsers();
     this.getProfiles();
   }
