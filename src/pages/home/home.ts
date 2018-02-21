@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {UserProvider} from "../../providers/user/user";
 import {ProfileProvider} from "../../providers/profile/profile";
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
   providers: [
     UserProvider,
-    ProfileProvider
+    ProfileProvider,
+    Camera
   ]
 })
 export class HomePage {
@@ -16,9 +18,9 @@ export class HomePage {
   public users = [];
   public profiles = [];
 
-  public user = {"_id":"", "name":"", "email":"", "profile":""};
+  public user = {"_id":"", "name":"", "email":"", "profile":"", "photo":""};
 
-  constructor(public navCtrl: NavController, private userService:UserProvider, private profileService:ProfileProvider) {
+  constructor(public navCtrl: NavController, private userService:UserProvider, private profileService:ProfileProvider, private camera: Camera) {
     this.getUsers();
     this.getProfiles();
   }
@@ -38,7 +40,7 @@ export class HomePage {
       this.userService.update(this.user).subscribe(respose => this.getUsers());
     }
 
-    this.user = {"_id":"", "name":"", "email":"", "profile":""};
+    this.user = {"_id":"", "name":"", "email":"", "profile":"", "photo":""};
   }
 
   public deleteUser(id) {
@@ -51,6 +53,25 @@ export class HomePage {
 
   public getProfiles() {
     this.profileService.findAll().subscribe(response => this.profiles = response);
+  }
+
+  public takePicture() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    };
+
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64:
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+
+      this.user.photo = base64Image;
+    }, (err) => {
+      // Handle error
+    });
   }
 
 }

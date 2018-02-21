@@ -8,26 +8,37 @@
 
 <ion-content padding>
   <form (ngSubmit)="saveUser()">
-    <ion-item-divider>
+    <ion-item>
       <ion-label color="primary" floating>Name</ion-label>
       <ion-input type="text" [(ngModel)]="user.name" name="name"></ion-input>
-    </ion-item-divider>
-    <ion-item-divider>
+    </ion-item>
+    <ion-item>
       <ion-label color="primary" floating>E-mail</ion-label>
       <ion-input type="email" [(ngModel)]="user.email" name="email"></ion-input>
-    </ion-item-divider>
-    <ion-item-divider>
+    </ion-item>
+    <ion-item>
       <ion-label>Profile</ion-label>
       <ion-select [(ngModel)]="user.profile" name="profile">
         <ion-option *ngFor="let profile of profiles" [value]="profile">{{ profile.name }}</ion-option>
       </ion-select>
-    </ion-item-divider>
+    </ion-item>
+    <ion-item>
+      <ion-label>Photo</ion-label>
+      <button (click)="takePicture()" ion-button outline item-end>
+        <ion-icon name="camera"></ion-icon>
+      </button>
+    </ion-item>
 
     <button ion-button type="submit" block>Save</button>
   </form>
   <ion-list *ngFor="let user of users">
     <ion-item-divider>
-      {{user.name}} - {{user.email}} - {{user.profile.name}}
+      <ion-avatar item-start>
+        <img [src]="user.photo">
+      </ion-avatar>
+      <h2>{{ user.name }}</h2>
+      <h3>{{ user.email }}</h3>
+      <!--<h4>{{ user.profile.name }}</h4>-->
       <button (click)="populateForm(user)" ion-button outline item-end color="dark">
         <ion-icon name="create"></ion-icon>
       </button>
