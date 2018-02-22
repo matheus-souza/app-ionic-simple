@@ -20,7 +20,8 @@ export class HomePage {
   public users = [];
   public profiles = [];
 
-  public user = {"_id":"", "name":"", "email":"", "profile":"", "photo":""};
+  public user = {"_id":"", "name":"", "email":"", "profile":"", "photo":"", "latitude":null, "longitude":null};
+  public userDefault = {"_id":"", "name":"", "email":"", "profile":"", "photo":"", "latitude":null, "longitude":null};
 
   constructor(public navCtrl: NavController, private userService:UserProvider, private profileService:ProfileProvider, private camera: Camera, private geolocation: Geolocation) {
     this.getUsers();
@@ -36,13 +37,20 @@ export class HomePage {
   }
 
   public saveUser() {
-    if (this.user._id == "") {
-      this.userService.save(this.user).subscribe(respose => this.getUsers());
-    } else {
-      this.userService.update(this.user).subscribe(respose => this.getUsers());
-    }
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.user.latitude = resp.coords.latitude;
+      this.user.longitude = resp.coords.longitude;
 
-    this.user = {"_id":"", "name":"", "email":"", "profile":"", "photo":""};
+      if (this.user._id == "") {
+        this.userService.save(this.user).subscribe(respose => this.getUsers());
+      } else {
+        this.userService.update(this.user).subscribe(respose => this.getUsers());
+      }
+
+      this.user = this.userDefault;
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
   }
 
   public deleteUser(id) {
